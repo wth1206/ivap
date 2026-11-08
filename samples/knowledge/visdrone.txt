@@ -1,0 +1,6 @@
+VisDrone2019-DET 数据集由天津大学发布，面向无人机航拍目标检测。
+数据集包含 10 个类别：pedestrian、people、bicycle、car、van、truck、tricycle、awning-tricycle、bus、motor。
+无人机遥感图像的特点包括目标尺寸小、分布密集、遮挡多、视角变化大。
+ECE-YOLO 在 YOLO11 基础上引入 ESPMStem、RepNCSPELAN4_low 和 DynamicHead。
+ESPMStem 在降采样前保留空间细节；DynamicHead 使用可变形卷积增强多尺度特征融合。
+RAG 知识库检索需要保留文档名称、页码和文本片段，便于回答时给出引用来源。

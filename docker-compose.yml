@@ -1,0 +1,95 @@
+name: ivap
+
+services:
+  mysql:
+    image: mysql:8.0.28
+    container_name: ivap-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-ivap_root_change_me}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-ivap}
+      MYSQL_USER: ${MYSQL_USER:-ivap}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-ivap_pass_change_me}
+      TZ: Asia/Shanghai
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$${MYSQL_ROOT_PASSWORD} --silent"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      args:
+        PIP_INDEX_URL: ${PIP_INDEX_URL:-https://pypi.org/simple}
+        TORCH_WHEEL_URL: ${TORCH_WHEEL_URL:-https://mirrors.aliyun.com/pytorch-wheels/cpu/torch-2.1.2%2Bcpu-cp39-cp39-linux_x86_64.whl}
+        TORCHVISION_WHEEL_URL: ${TORCHVISION_WHEEL_URL:-https://mirrors.aliyun.com/pytorch-wheels/cpu/torchvision-0.16.2%2Bcpu-cp39-cp39-linux_x86_64.whl}
+    container_name: ivap-backend
+    restart: unless-stopped
+    env_file:
+      - ${ENV_FILE:-.env}
+    environment:
+      APP_ENV: production
+      DEBUG: "false"
+      DATABASE_URL: mysql+pymysql://${MYSQL_USER:-ivap}:${MYSQL_PASSWORD:-ivap_pass_change_me}@mysql:3306/${MYSQL_DATABASE:-ivap}?charset=utf8mb4
+      MODEL_PRELOAD: "true"
+      DETECTOR_MODE: real
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8080,http://127.0.0.1:8080}
+      UPLOAD_DIR: /app/backend/uploads
+      VECTOR_DB_DIR: /app/backend/vector_db
+      LOG_DIR: /app/backend/logs
+      MODELS_CONFIG: /app/backend/config/models.yaml
+    ports:
+      - "8000:8000"
+    volumes:
+      - uploads:/app/backend/uploads
+      - vector_db:/app/backend/vector_db
+      - logs:/app/backend/logs
+    depends_on:
+      mysql:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)",
+        ]
+      interval: 30s
+      timeout: 8s
+      retries: 10
+      start_period: 180s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ivap-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  mysql_data:
+  uploads:
+  vector_db:
+  logs:

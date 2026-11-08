@@ -1,0 +1,25 @@
+# ECE-YOLO model registry.  Paths are relative to the project root.
+default: ece-yolo
+models:
+  ece-yolo:
+    display_name: ECE-YOLO
+    adapter: ece_yolo
+    weights: best.pt
+    device: auto
+    imgsz: 640
+    conf: 0.25
+    iou: 0.7
+    max_det: 300
+    class_names: null
+
+  mock:
+    display_name: Mock Detector (开发用)
+    adapter: mock
+    weights: null
+    device: cpu
+    imgsz: 640
+    conf: 0.25
+    iou: 0.7
+    max_det: 100
+    class_names:
+      - mock_object

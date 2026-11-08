@@ -1,0 +1,145 @@
+:root {
+  --ivap-bg: #f5f7fb;
+  --ivap-card: #ffffff;
+  --ivap-primary: #2563eb;
+  --ivap-text: #0f172a;
+  --ivap-muted: #64748b;
+  --ivap-border: #e9eef6;
+  --el-color-primary: #2563eb;
+  --el-color-primary-light-3: #5b8def;
+  --el-color-primary-light-5: #8fb3f5;
+  --el-color-primary-light-7: #c3d7fb;
+  --el-color-primary-light-8: #dbe7fd;
+  --el-color-primary-light-9: #eff6ff;
+  --el-color-primary-dark-2: #1d4ed8;
+  --el-border-radius-base: 8px;
+  --el-font-size-base: 13px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--ivap-bg);
+  color: var(--ivap-text);
+  font-family: "Inter", "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--ivap-primary);
+  text-decoration: none;
+}
+
+.page {
+  animation: page-in 0.25s ease;
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.panel {
+  border: 1px solid var(--ivap-border) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.035) !important;
+  background: var(--ivap-card);
+}
+
+.panel .el-card__header {
+  padding: 15px 18px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.panel .el-card__body {
+  padding: 18px;
+}
+
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.panel-head > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.panel-head strong {
+  font-size: 14px;
+  color: #0f172a;
+  font-weight: 650;
+}
+
+.panel-head span {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.el-table {
+  --el-table-header-bg-color: #f8fafc;
+  --el-table-header-text-color: #475569;
+  --el-table-border-color: #eef2f7;
+  font-size: 12.5px;
+}
+
+.el-table th.el-table__cell {
+  font-weight: 600;
+}
+
+.el-button {
+  font-weight: 500;
+}
+
+.el-input__wrapper,
+.el-textarea__inner,
+.el-select__wrapper {
+  box-shadow: 0 0 0 1px #dfe7f2 inset !important;
+}
+
+.el-input__wrapper.is-focus,
+.el-textarea__inner:focus,
+.el-select__wrapper.is-focused {
+  box-shadow: 0 0 0 1px var(--ivap-primary) inset !important;
+}
+
+.el-tag {
+  border-radius: 6px;
+}
+
+.mock-alert {
+  margin-bottom: 12px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@media (max-width: 760px) {
+  .panel .el-card__body {
+    padding: 14px;
+  }
+}

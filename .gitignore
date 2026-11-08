@@ -1,0 +1,53 @@
+# --- Python ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# --- Secrets / local config ---
+.env
+.env.*
+!.env.example
+!.env.docker.example
+.cache/
+
+# --- Runtime data ---
+backend/logs/
+backend/data/
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/vector_db/*
+!backend/vector_db/.gitkeep
+.mysql/
+*.log
+*.db
+*.sqlite3
+
+# --- Model weights (keep them outside Git; mount or copy locally) ---
+*.pt
+*.pth
+*.onnx
+*.engine
+
+# --- Frontend ---
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+
+# --- Handover archive ---
+archive/*.zip
+archive/*.sha256.txt
+archive/*-manifest.txt
+
+# --- OS / editors ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

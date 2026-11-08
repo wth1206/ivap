@@ -1,0 +1,19 @@
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+exclude = [
+    ".venv",
+    "backend/uploads",
+    "backend/vector_db",
+    "backend/logs",
+    "backend/app/algorithms/ece_yolo/vendor",
+    "backend/alembic/versions",
+    "frontend/node_modules",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+ignore = ["E501", "B008"]
+
+[tool.ruff.format]
+quote-style = "double"

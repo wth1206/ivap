@@ -1,0 +1,15 @@
+# IVAP vision stack (Python 3.9 / CUDA 11.8)
+# Only needed for a clean environment; this machine reuses D:\Anaconda\envs\py39.
+#
+# Install:
+#   .\.venv\Scripts\python.exe -m pip install -r requirements-vision.txt
+#
+# For CPU-only, replace the index URL with https://download.pytorch.org/whl/cpu
+# and change +cu118 to +cpu.
+
+--extra-index-url https://download.pytorch.org/whl/cu118
+
+torch==2.1.2+cu118
+torchvision==0.16.2+cu118
+opencv-python>=4.9,<5
+ultralytics>=8.3,<8.5

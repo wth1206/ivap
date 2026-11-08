@@ -1,0 +1,23 @@
+# Build context exclusions (root context for backend)
+.git
+.gitignore
+.venv
+.mysql
+.cache
+.env
+.env.*
+!.env.docker.example
+docs
+frontend
+backend/tests
+backend/uploads
+backend/vector_db
+backend/logs
+backend/data
+backend/.pytest_cache
+**/__pycache__
+**/*.pyc
+**/*.pyo
+.pytest_cache
+.ruff_cache
+*.log
